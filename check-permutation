@@ -1,0 +1,25 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    const dictA = {};
+    for(let i = 0; i < A.length; i++) {
+        if (dictA[A[i]] === undefined) {
+            dictA[A[i]] = i;
+        }
+    }
+    
+    for(let i = 1; i <= A.length; i++) {
+        if (dictA[i] === undefined) {
+            return 0;
+        }
+        
+        A[dictA[i]] = 'deleted';
+    }
+    
+    for(let i = 0; i < A.length; i++) {
+        if (A[i] !== 'deleted') {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
