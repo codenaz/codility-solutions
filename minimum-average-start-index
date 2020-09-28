@@ -1,0 +1,32 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    const prefixSumArray = [A[0]];
+    
+    for(let i = 1; i < A.length; i++) {
+        prefixSumArray[i] = prefixSumArray[i - 1] + A[i];
+    }
+    
+    let minimumAverage; let minimumStartPoint;
+    
+    for (let i = 0; i < A.length; i++) {
+        for (let j = i + 1; j < A.length; j++) {
+            const average = avgOfRange(prefixSumArray, i, j);
+            if ((minimumAverage === undefined) || (average < minimumAverage)) {
+                minimumAverage = average;
+                minimumStartPoint = i;
+            } else if (average === minimumAverage) {
+                if (i < minimumStartPoint) {
+                    minimumStartPoint = i;
+                }
+            }
+        }
+    }
+    
+    return minimumStartPoint;
+}
+
+function avgOfRange(sumArray, start, end){
+    const endNumber = sumArray[end];
+    const startNumber = start ? sumArray[start - 1] : 0;
+    return (endNumber - startNumber) / (end - start + 1)
+}
