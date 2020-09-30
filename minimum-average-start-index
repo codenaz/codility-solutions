@@ -8,16 +8,28 @@ function solution(A) {
     
     let minimumAverage; let minimumStartPoint;
     
-    for (let i = 0; i < A.length; i++) {
-        for (let j = i + 1; j < A.length; j++) {
-            const average = avgOfRange(prefixSumArray, i, j);
-            if ((minimumAverage === undefined) || (average < minimumAverage)) {
-                minimumAverage = average;
+    for (let i = 0; i < A.length - 1; i++) {
+        let averageOfSliceTwo; let averageOfSliceThree; let lowerAverage;
+        
+        averageOfSliceTwo = avgOfRange(prefixSumArray, i, i+1);
+        
+        if ((i + 2) < A.length) {
+          averageOfSliceThree = avgOfRange(prefixSumArray, i, i+2);
+        }
+        
+        if (averageOfSliceThree === undefined) {
+            lowerAverage = averageOfSliceTwo
+        } else {
+            lowerAverage = Math.min(averageOfSliceTwo, averageOfSliceThree);
+        }
+        
+            
+        if ((minimumAverage === undefined) || (lowerAverage < minimumAverage)) {
+            minimumAverage = lowerAverage;
+            minimumStartPoint = i;
+        } else if (lowerAverage === minimumAverage) {
+            if (i < minimumStartPoint) {
                 minimumStartPoint = i;
-            } else if (average === minimumAverage) {
-                if (i < minimumStartPoint) {
-                    minimumStartPoint = i;
-                }
             }
         }
     }
@@ -30,3 +42,4 @@ function avgOfRange(sumArray, start, end){
     const startNumber = start ? sumArray[start - 1] : 0;
     return (endNumber - startNumber) / (end - start + 1)
 }
+
