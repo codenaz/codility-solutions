@@ -1,0 +1,18 @@
+function solution(A) {
+    const counters = Array((2 * A.length) + 1).fill(0)
+    for(let j = 0; j<lenOfA; j++) counters[A[j]]++;
+    
+    return A.map(number=> {
+        let nonDivisors = A.length
+        for(let i = 1; i*i <= number; i++) {
+            if(number % i !== 0) {
+              continue;
+            }
+            nonDivisors -= counters[i];
+            if(i*i !== number) {
+              nonDivisors -= counters[number/i];
+            }
+        }
+        return nonDivisors
+    })
+}
