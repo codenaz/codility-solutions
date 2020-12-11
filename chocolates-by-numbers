@@ -1,0 +1,13 @@
+function solution(N, M) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    function gcd(a, b) {
+        if (a % b === 0) {
+            return b;
+        }
+        return gcd(b, a % b);
+    }
+
+    const lcm = (N * M) / gcd(N, M);
+
+    return lcm / M;
+}
